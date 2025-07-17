@@ -27,6 +27,6 @@ jobs:
         run: |
           git config user.name "doc-bot"
           git config user.email "doc-bot@yourdomain.com"
-          git add docs.md
+          git add -f docs.md
           git commit -m "chore: auto-generate docs.md [skip ci]" || echo "No changes"
           git push

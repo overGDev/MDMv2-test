@@ -1,0 +1,32 @@
+name: Generate Combined Docs
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies (if any)
+        run: npm install || echo "No dependencies"
+
+      - name: Generate docs.md
+        run: node generate-docs.js
+
+      - name: Commit combined docs
+        run: |
+          git config user.name "doc-bot"
+          git config user.email "doc-bot@yourdomain.com"
+          git add docs.md
+          git commit -m "chore: auto-generate docs.md [skip ci]" || echo "No changes"
+          git push

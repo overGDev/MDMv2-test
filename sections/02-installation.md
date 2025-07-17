@@ -1,3 +1,3 @@
 # Instalation
 
-This is how to install.
+This is how to install the program.

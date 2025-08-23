@@ -1,0 +1,2 @@
+## Segmentos objetivo
+

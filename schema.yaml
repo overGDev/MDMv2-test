@@ -1,0 +1,183 @@
+- title: Carátula
+
+- title: Registro de Versiones del Informe
+  alias: Versiones
+
+- title: Project Report Collaboration Insights
+  alias: Insights
+
+- title: Contenido
+  alias: Indice
+
+- title: Student Outcome
+  alias: Outcome
+
+- title: "Capítulo 1: Introducción"
+  alias: Capítulo 1
+  children:
+    - title: Start-up Profile
+      children:
+        - title: Descripción de la startup
+          alias: Descripción
+        - title: Perfiles de los integrantes del equipo
+          alias: Integrates
+    - title: Solution Profile
+      children:
+        - title: Antecedentes y problemática
+          alias: Antecedentes
+        - title: Lean UX Process
+          children:
+            - title: Lean UX Problem Statements
+              alias: Problem Statements
+            - title: Lean UX Assumptions
+              alias: Assumptions
+            - title: Lean UX Hypothesis Statements
+              alias: Hypothesis Statements
+            - title: Lean UX Canvas
+              alias: Canvas
+    - title: Segmentos objetivo
+      alias: Segmentos
+
+- title: Requirements Elicitation & Analysis
+  alias: Capítulo 2
+  children:
+    - title: Competidores
+      children:
+        - title: Análisis competitivo
+        - title: Estrategias y tácticas frente a competidores
+          alias: Estrategias y tácticas
+    - title: Entrevistas
+      children:
+        - title: Diseño de entrevistas
+        - title: Registro de entrevistas
+        - title: Análisis de entrevistas
+    - title: Needfinding
+      children:
+        - title: User Personas
+        - title: User Task Matrix
+          alias: Task Matrix
+        - title: User Journey Mapping
+          alias: Journey Mapping
+        - title: Empathy Mapping
+        - title: As-Is Scenario Mapping
+          alias: As-Is
+    - title: Ubiquitous Language
+
+- title: Requirements Specification
+  alias: Capítulo 3
+  children:
+    - title: To-Be Scenario Mapping
+      alias: To-Be
+    - title: User Stories
+    - title: Impact Mapping
+    - title: Product Backlog
+
+- title: Product Design
+  alias: Capítulo 4
+  children:
+    - title: Style Guidelines
+      children:
+        - title: General Style Guidelines
+          alias: General
+        - title: Web Style Guidelines
+          alias: Web
+    - title: Information Architecture
+      children:
+        - title: Organization Systems
+          alias: Organization
+        - title: Labeling Systems
+          alias: Labelling
+        - title: SEO Tags and Meta Tags
+          alias: SEO
+        - title: Searching Systems
+          alias: Searching
+        - title: Navigation Systems
+          alias: Navigation
+    - title: Landing Page UI Design
+      alias: Landing Page
+      children:
+        - title: Landing Page Wireframe
+          alias: Wireframes
+        - title: Landing Page Mock-up
+          alias: Mock-up
+    - title: Web Applications UX/UI Design
+      alias: Web Application
+      children:
+        - title: Web Applications Wireframes
+          alias: Wireframes
+        - title: Web Applications Wireflow Diagrams
+          alias: Wireflow
+        - title: Web Applications Mock-ups
+          alias: Mock-up
+        - title: Web Applications User Flow Diagrams
+          alias: User Flow
+        - title: Web Applications Prototyping
+          alias: Prototype
+    - title: Domain-Driven Software Architecture
+      alias: DDD
+      children:
+        - title: Software Architecture Context Diagram
+          alias: Context
+        - title: Software Architecture Container Diagrams
+          alias: Containers
+        - title: Software Architecture Components Diagrams
+          alias: Components
+    - title: Software Object-Oriented Design
+      alias: OOP
+      children:
+        - title: Class Diagrams
+          alias: Diagram
+        - title: Class Dictionary
+          alias: Dictionary
+    - title: Database Design
+      alias: DB
+      children:
+        - title: Database Diagram
+          alias: Diagram
+
+- title: Product Implementation, Validation & Deployment
+  alias: Capítulo 5
+  children:
+    - title: Software Configuration Management
+      alias: Configuration Management
+      children:
+        - title: Software Development Environment Configuration
+          alias: Develop Config
+        - title: Source Code Management
+          alias: Code Management
+        - title: Source Code Style Guide & Conventions
+          alias: Code Conventions
+        - title: Software Deployment Configuration
+          alias: Deploy Config
+    - title: Landing Page, Services & Applications Implementation
+      alias: Implementation Evidence
+      children:
+        - title: Sprint n
+          children:
+            - title: Sprint Planning n
+            - title: Aspect Leaders and Collaborators
+            - title: Sprint Backlog n
+            - title: Development Evidence for Sprint Review
+              alias: Development Evidence
+            - title: Execution Evidence for Sprint Review
+              alias: Execution Evidence
+            - title: Services Documentation Evidence for Sprint Review
+              alias: Services Evidence
+            - title: Software Deployment Evidence for Sprint Review
+              alias: Deployment Evidence
+            - title: Team Collaboration Insights during Sprint
+              alias: Collaboration Insights
+    - title: Validation Interviews
+      children:
+        - title: Diseño de Entrevistas
+        - title: Registro de Entrevistas
+        - title: Evaluaciones según heurísticas
+          alias: Heurísticas
+    - title: Video About-the-Product
+      alias: About-The-Product
+
+- title: Conclusiones
+
+- title: Bibliografía
+
+- title: Anexos

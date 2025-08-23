@@ -1,0 +1,43 @@
+name: Update README.md
+
+on:
+  push:
+    branches:
+      - main
+      - release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.21"
+
+      - name: Build script
+        run: go build -o combine_sections ./scripts/combine_sections.py
+
+      - name: Run script
+        run: ./build-sections
+
+      - name: Commit and push
+        env:
+          CURRENT_BRANCH: ${{ github.ref_name }}
+        if: success()
+        run: |
+          git config --global user.name "mdm-bot"
+          git config --global user.email "mdm-bot@users.noreply.github.com"
+
+          git add README.md
+
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: updated 'README.md'"
+            git push origin "$CURRENT_BRANCH"
+          fi

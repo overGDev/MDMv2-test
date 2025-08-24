@@ -16,16 +16,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Go
-        uses: actions/setup-go@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          go-version: "1.21"
+          python-version: '3.11'
 
       - name: Build script
-        run: go build -o combine_sections ./scripts/combine_sections.py
-
-      - name: Run script
-        run: ./build-sections
+        run: python ./scripts/combine_sections.py
 
       - name: Commit and push
         env:

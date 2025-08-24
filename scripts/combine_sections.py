@@ -5,7 +5,7 @@ import yaml
 from pathlib import Path
 
 SCHEMA_FILE = "schema.yaml"
-OUTPUT_FILE = "document.md"
+OUTPUT_FILE = "readme.md"
 
 def load_schema():
     with open(SCHEMA_FILE, "r", encoding="utf-8") as f:

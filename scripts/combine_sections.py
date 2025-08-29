@@ -1,13 +1,11 @@
-#!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2025 Alvaro Orozco
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 Generate README.md from schema.yaml and markdown files in sections/
 - Uses schema.yaml to determine order and hierarchy
 - Uses alias > title to resolve filenames (sanitized to snake_case)
-- Reads .md content and inserts under headers
+- Leaf sections (no children) must have their own .md file including its header
+- Directory sections (with children) have no file; a header is generated
 """
 
 import os
@@ -17,7 +15,6 @@ import yaml
 import unicodedata
 from pathlib import Path
 
-# Directories relative to this script
 SCRIPT_DIR = Path(__file__).resolve().parent
 BASE_DIR = SCRIPT_DIR.parent
 SECTIONS_DIR = BASE_DIR / "sections"
@@ -27,10 +24,8 @@ OUTPUT_FILE = BASE_DIR / "README.md"
 
 def sanitize_string(path: str) -> str:
     """Python equivalent of the Go sanitizeString: produce safe snake_case filenames."""
-    # Normalize Unicode -> ASCII
     t = unicodedata.normalize("NFD", path)
     t = "".join(ch for ch in t if unicodedata.category(ch) != "Mn")
-    # Apply snake_case rules
     t = t.replace(" ", "_").replace("-", "_")
     t = re.sub(r"[^a-zA-Z0-9_./]", "", t)
     t = t.lower()
@@ -47,12 +42,12 @@ def load_schema():
         return data
     raise ValueError("schema.yaml must be either a list or a dict with key 'sections'")
 
-def section_filename(section: dict) -> Path | None:
+def section_filename(section: dict, parent_path: Path) -> Path | None:
     key = section.get("alias") or section.get("Alias") or section.get("title") or section.get("Title")
     if not key:
         return None
     rel = sanitize_string(f"{key}.md")
-    return SECTIONS_DIR / rel
+    return parent_path / rel
 
 def read_markdown(md_path: Path) -> str:
     if md_path and md_path.exists():
@@ -64,27 +59,33 @@ def read_markdown(md_path: Path) -> str:
         print(f"[WARNING] File not found: {md_path}", file=sys.stderr)
     return ""
 
-def build_document(sections, level=1) -> str:
+def build_document(sections, parent_dir: Path, level=1) -> str:
     parts = []
     for section in sections or []:
         title = (section.get("title") or section.get("Title") or
                  section.get("alias") or section.get("Alias") or "Section").strip()
-        parts.append(f"{'#' * level} {title}\n\n")
 
-        # Insert markdown content
-        md_path = section_filename(section)
-        content = read_markdown(md_path)
-        if content:
-            parts.append(content)
-            if not content.endswith("\n"):
-                parts.append("\n")
-
-        # Handle children
+        # Children decide whether this is a directory or a file section
         children = section.get("children") or section.get("Children") or []
-        if children:
-            parts.append(build_document(children, level + 1))
 
-        if not parts[-1].endswith("\n\n"):
+        if children:
+            # Directory section: generate header, no file
+            parts.append(f"{'#' * level} {title}\n\n")
+
+            child_dir_name = sanitize_string(section.get("alias") or section.get("title") or "")
+            next_dir = parent_dir / child_dir_name
+            parts.append(build_document(children, next_dir, level + 1))
+        else:
+            # Leaf section: must be a file, content already contains its own header
+            md_path = section_filename(section, parent_dir)
+            if md_path is not None:
+                content = read_markdown(md_path)
+                if content:
+                    parts.append(content)
+                    if not content.endswith("\n"):
+                        parts.append("\n")
+
+        if parts and not parts[-1].endswith("\n\n"):
             parts.append("\n")
     return "".join(parts)
 
@@ -97,7 +98,7 @@ def main():
         sys.exit(1)
 
     sections = load_schema()
-    document_content = build_document(sections)
+    document_content = build_document(sections, SECTIONS_DIR)
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(document_content)

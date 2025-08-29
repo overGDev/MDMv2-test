@@ -1,12 +1,8 @@
+#!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
 # Copyright (c) 2025 Alvaro Orozco
-"""
-Generate README.md from schema.yaml and markdown files in sections/
-- Uses schema.yaml to determine order and hierarchy
-- Uses alias > title to resolve filenames (sanitized to snake_case)
-- Leaf sections (no children) must have their own .md file including its header
-- Directory sections (with children) have no file; a header is generated
-"""
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2025 Alvaro Orozco
 
 import os
 import re
@@ -65,18 +61,17 @@ def build_document(sections, parent_dir: Path, level=1) -> str:
         title = (section.get("title") or section.get("Title") or
                  section.get("alias") or section.get("Alias") or "Section").strip()
 
-        # Children decide whether this is a directory or a file section
         children = section.get("children") or section.get("Children") or []
 
         if children:
-            # Directory section: generate header, no file
+            # Parent sections need to have their headers generated
             parts.append(f"{'#' * level} {title}\n\n")
 
             child_dir_name = sanitize_string(section.get("alias") or section.get("title") or "")
             next_dir = parent_dir / child_dir_name
             parts.append(build_document(children, next_dir, level + 1))
         else:
-            # Leaf section: must be a file, content already contains its own header
+            # Leaf sections already contain their own headers
             md_path = section_filename(section, parent_dir)
             if md_path is not None:
                 content = read_markdown(md_path)
